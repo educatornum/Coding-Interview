@@ -1,6 +1,6 @@
 i = 0
-# n = ['white', 'white', 'black', 'white', 'black', 'white', 'white', 'white', 'black', 'black']
-n = ['white', 'white', 'black', 'white', 'black']
+n = ['white', 'white', 'black', 'white', 'black', 'white', 'white', 'white', 'black', 'black']
+# n = ['white', 'white', 'black', 'white', 'black']
 answers = []
 success_min = len(n) - 1
 
@@ -10,13 +10,9 @@ def find_parity(known):
     no_white = known.count('white')
     print ("Нийт цагаан малгайны тоо: " + str(no_white))
     if no_white % 2 == 0:
-        parity = 'even' # even- tegsh
+        parity = 'even' 
     else:
-        parity = 'odd' # sondgoi
-    # if parity == 'even':
-    #     print ("Нийт цагаан малгайны тоо: ТЭГШ")
-    # else:
-    #     print ("Нийт цагаан малгайны тоо: СОНДГОЙ")
+        parity = 'odd' 
     print("---"*30)
     return parity
 
@@ -24,21 +20,17 @@ def my_hat(n, i, success_min):
     incorrect = 0
     correct = 0
     while i < len(n):
-        
-        # start riddle logic
         known = n[i+1:]
-        # print("KNOW people", known, len(known))
         known_parity = find_parity(known)
         if i == 0:
             print("Хамгийн эхний хүн:",i+1)
-            if known_parity == 'even': #tegsh
+            if known_parity == 'even': 
                 guess = 'white'
             else:
-                guess = 'black'  #odd- сондгой
+                guess = 'black' 
         elif i == 1:
             print(i+1,"дах хүн:")
             if current_parity != known_parity:
-                # print ("current_parity != known_parity")
                 if guess == 'white':
                     guess = 'black'
                 else:
@@ -48,30 +40,20 @@ def my_hat(n, i, success_min):
         else:
             print(i+1,"дах хүн:")
             past = answers[1:]
-            # print( "past: " + str(past))
             new_known = past + known
-            # print ("new_known: " + str(new_known))
             last = answers[-1]
             print("last",last)
-            # print ("last: " + last)
-
             known_parity = find_parity(new_known)
             print("known_parity:",known_parity)
             print("current_parity:",current_parity)
             if current_parity != known_parity:
-                # print( "current_parity != known_parity")
                 if last == 'white':
                     guess = 'black'
                 else:
                     guess = 'white'
-            # else:
-            #     print("current_parity == known_parity")
-
         current_parity = known_parity
         answers.append(guess)
         print(" ТААСАН ХАРИУЛТ : " + guess)
-        # print(" ХАРИУЛТ: " + str(answers))
-        # end riddle logic
 
         if guess == n[i]:
             correct += 1
@@ -83,9 +65,17 @@ def my_hat(n, i, success_min):
     print ("minimum needed to succeed: " , str(success_min))
     return correct >= success_min
 
-# print ("Passed? " + str(my_hat(n, i, success_min)))
+print ("Passed? " + str(my_hat(n, i, success_min)))
 
+"""
+    Explain:
 
+    1.  The first man counts the only white hats. 
+    2.  Then he can say “I’m white” if the total quantity of white hats is “even”. If it isn't even he can say “I’m black”. His chance is 50% 50%. He can mistake.
+    3.  The second guy must check 2 conditions. The last total quantity of white hats is not equal to now total quantity of white hats. Second is, he can say “I’m black” if the first guy’s guess was “black”. If isn’t black he can say “I’m white”.  It will be good. Because he knows the total quantity of white hats.
+    4.  The third guy can say “I’m black” if the second guy's guess is “white”. If it isn’t “white”, he is the “white”.
+    5.  The next guys are the same as the third guy.
+"""
 
 """
 1. Хамгийн эхний хүн буюу 10 дах хүн өмнөх бүх хүнийхээ цагаан өнгөтэй малгайг тоолно.
@@ -103,53 +93,3 @@ def my_hat(n, i, success_min):
 
 
 """
-import unittest
-def solution_a(a):
-    B = set(sorted(a))
-    m = 1
-    for x in B:
-        if x == m:
-            m+=1
-    return m
-arr = [1, 3, 6, 4, 1, 2]
-# arr  = [10,20,30,40]
-print(solution_a(a=arr))
-
-class TestSolutionA(unittest.TestCase):
-    def test_case0(self):
-      input_list = [1, 3, 6, 4, 1, 2]
-      val = solution_a(input_list)
-      self.assertEqual(val, 5)
-
-    def test_case1(self):
-      input_list = [1, 2, 3]
-      val = solution_a(input_list)
-      self.assertEqual(val, 4)
-
-    def test_case2(self):
-      input_list = [ -1, -3]
-      val = solution_a(input_list)
-      self.assertEqual(val, 1)
-
-    def test_case3(self):
-      input_list = [100000, 500, 10]
-      val = solution_a(input_list)
-      self.assertEqual(val, 1)
-
-    def test_case4(self):
-      input_list = [ -5, -10, -2, 0]
-      val = solution_a(input_list)
-      self.assertEqual(val, 1)
-
-    def test_case5(self):
-      input_list = [ -5, -10, -2, 0]
-      val = solution_a(input_list)
-      self.assertEqual(val, 1)
-
-    def test_case6(self):
-      input_list = [-266959, -559850, 667410, -370471, -695927, 170911, 658702, -737673, 370182, -285767]
-      val = solution_a(input_list)
-      self.assertEqual(val, 1)
-
-if __name__ == '__main__':
-    unittest.main()
